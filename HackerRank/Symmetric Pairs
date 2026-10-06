@@ -1,0 +1,12 @@
+** HackerRank Question: Symmetric Pairs**
+Question link: https://www.hackerrank.com/challenges/symmetric-pairs/problem?isFullScreen=true
+
+Code:
+
+SELECT f1.X, f1.Y
+FROM Functions f1
+JOIN Functions f2
+ON f1.X = f2.Y AND f2.X = f1.Y
+GROUP BY f1.X, f1.Y
+HAVING f1.X < f1.Y or COUNT(*) > 1
+ORDER BY f1.X;
