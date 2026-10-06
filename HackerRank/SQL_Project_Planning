@@ -1,0 +1,25 @@
+**HackerRank Question: SQL Project Planning**
+Question link: https://www.hackerrank.com/challenges/sql-projects/problem?isFullScreen=true
+
+Code:
+
+WITH project_start AS (
+    SELECT Start_Date, End_Date,
+    CASE
+    WHEN LAG(End_Date) OVER (ORDER BY Start_Date) = Start_Date
+    THEN 0
+    ELSE 1
+    END AS new_project
+    FROM Projects
+),
+
+project_group AS (
+    SELECT Start_Date, End_Date,
+    SUM(new_project) OVER (ORDER BY Start_Date) AS project_id
+    FROM project_start
+)
+
+SELECT MIN(Start_Date), MAX(End_Date)
+FROM project_group
+GROUP BY project_id
+ORDER BY DATEDIFF(MAX(End_Date), MIN(Start_Date)), MIN(Start_Date);
